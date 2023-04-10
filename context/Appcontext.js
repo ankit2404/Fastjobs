@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { useRouter } from "next/router";
 const AppContext = createContext();
 
@@ -11,10 +11,20 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const checkStatus = async () => {
       try {
-        const data = await fetch(
+        // const data = await fetch(
+        //   `https://frontendtestapi.staging.fastjobs.io/auth/me`,
+        //   {
+        //     method: "GET",
+        //     headers: {
+        //       Accept: "application/json",
+        //       "Content-Type": "application/json",
+        //     },
+        //     credentials: "include",
+        //   }
+        // );
+        const data = await axios.get(
           `https://frontendtestapi.staging.fastjobs.io/auth/me`,
           {
-            method: "GET",
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
@@ -22,7 +32,7 @@ export const AppProvider = ({ children }) => {
             credentials: "include",
           }
         );
-        const d = await data.json();
+        // const d = await data.json();
         console.log(data.status);
         if (data.status === 200) {
           setLoggedIn(true);
